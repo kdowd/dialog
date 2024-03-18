@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Crazy Dialog</title>
+
+		<style>
+			::backdrop {
+				background-image: linear-gradient(45deg, magenta, rebeccapurple, dodgerblue, green);
+				opacity: 0.75;
+			}
+
+			dialog {
+				margin-top: 25%;
+				background: green;
+				border: none;
+				border-radius: 1rem;
+			}
+		</style>
+	</head>
+	<body>
+		<button class="open-dialog-one">Show the dialog</button>
+		<dialog>
+			<button autofocus>Close</button>
+			<h1>Newsletter SignUp:</h1>
+			<p>Give it a go, join my group !</p>
+		</dialog>
+
+		<script>
+			const dialogElement = document.querySelector('dialog');
+			const showButton = document.querySelector('.open-dialog-one');
+			const closeButton = document.querySelector('dialog button');
+
+			// "Show the dialog" button opens the dialog modally
+			showButton.addEventListener('click', () => {
+				dialogElement.showModal();
+			});
+
+			// "Close" button closes the dialog
+			closeButton.addEventListener('click', () => {
+				dialogElement.close();
+			});
+
+			dialogElement.addEventListener('click', (e) => {
+				let dialogDimensions = dialogElement.getBoundingClientRect();
+				if (
+					e.clientX < dialogDimensions.left ||
+					e.clientX > dialogDimensions.right ||
+					e.clientY < dialogDimensions.top ||
+					e.clientY > dialogDimensions.bottom
+				) {
+					dialogElement.close();
+				}
+			});
+		</script>
+	</body>
+</html>
